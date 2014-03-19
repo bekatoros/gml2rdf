@@ -2,7 +2,7 @@
 <%@include file="header.jsp" %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<!--
 <div class="jumbotron">
     <div class="container">
         <h1>Hello, world!</h1>
@@ -10,32 +10,54 @@
         <p><a class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
     </div>
 </div>
-
+-->
 <div class="container">
-
-
+</br>
+<h1 align="center">Online GML to stRDF converter</h1>
     <form role="form" id='upload' action='upload.jsp' method='post' class="form-horizontal" enctype='multipart/form-data' >                                      
 
         <div class="form-group">
-            <label class="form-label"  for='property'>Geo Property</label> 
-          <INPUT  type="text" id="property" class="form-control" name='property'   />
+            <label class="col-sm-2 control-label" for='property'>Geo Property</label> 
+             <div class="col-sm-10">
+                 <INPUT  type="text" id="property" class="form-control" name='property'  placeholder='e.g. ogr:geometryProperty' required />
+          </div>
+        </div>
+             <div class="form-group">
+            <label class="col-sm-2 control-label"  for='namespaces'>Pre-loaded Namespaces</label> 
+
+            <div class="col-sm-10">
+             <textarea type="text" rows="11"  class="form-control" id="preloaded" name='preloaded'    disabled>xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:imro="http://www.geonovum.nl/imro/2008/1"
+xmlns:xlink="http://www.w3.org/1999/xlink"
+xmlns:gml="http://www.opengis.net/gml"
+xmlns:math="http://www.w3.org/2005/xpath-functions/math"
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:owl="http://www.w3.org/2002/07/owl#"
+xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+xmlns:strdf="http://www.strabon.di.uoa.gr/"</textarea>
+                </div>
         </div>
         <div class="form-group">
-            <label class="form-label"  for='namespaces'>Namespaces</label> 
-  
-            <textarea type="text" class="form-control" id="namespaces" name='namespaces'   >
-            </textarea>
+            <label class="col-sm-2 control-label" for='namespaces'>Namespaces</label> 
+
+            <div class="col-sm-10">
+            <textarea type="text" class="form-control" id="namespaces" name='namespaces' required placeholder="e.g. xmlns:ogr='http://ogr.maptools.org/'" ></textarea>
+            </div>
+            
         </div>
         <div class="form-group">
-            <label class="form-label"  for='fileToUpload'>Επιλογή αρχείου:</label> 
-      <INPUT type='file' name='fileToUpload'  class="input-file"  id='fileToUpload' onchange='fileSelected();' />  
-      
+            <label class="col-sm-2 control-label" for='fileToUpload' required>Επιλογή αρχείου:</label> 
+             <div class="col-sm-offset-4  col-sm-6">
+      <INPUT type='file' name='fileToUpload' required class="input-file"  id='fileToUpload' onchange='fileSelected();' />  
+      </div>
         </div>
 
         <div class="form-group">
-            
+             <div class="col-sm-offset-6 col-sm-6">
                  <button type="submit" id='bt1' class="btn btn-default">Υποβολή</button>
-          
+          </div>
         </div>
            </br>
     <div id='prbar'></div>

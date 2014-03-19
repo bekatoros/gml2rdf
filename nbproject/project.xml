@@ -96,6 +96,18 @@
                     <file>${file.reference.uploadbean.jar}</file>
                     <path-in-war>/</path-in-war>
                 </library>
+                <library dirs="200">
+                    <file>${file.reference.convert_1.xsl}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.convert_2.xsl}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.convert_3.xsl}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
             </web-module-additional-libraries>
             <source-roots>
                 <root id="src.dir"/>

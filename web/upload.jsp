@@ -1,4 +1,18 @@
-  <%@page import="java.io.ByteArrayInputStream"%>
+
+
+<%@page import="javax.xml.transform.TransformerException"%>
+<%@page import="javax.xml.transform.ErrorListener"%>
+<%@page import="javax.xml.transform.Transformer"%>
+<%@page import="javax.xml.transform.TransformerFactory"%>
+<%@page import="javax.xml.transform.Result"%>
+<%@page import="javax.xml.validation.Schema"%>
+<%@page import="javax.xml.validation.SchemaFactory"%>
+<%@page import="javax.xml.validation.Validator"%>
+<%@page import="java.util.logging.Level"%>
+<%@page import="java.util.logging.Logger"%>
+<%@page import="javax.xml.transform.stream.StreamSource"%>
+<%@page import="javax.xml.transform.Source"%>
+<%@page import="java.io.ByteArrayInputStream"%>
 <%@page import="java.util.Enumeration"%>
 <%@page import="java.io.InputStream"%>
 <%@page import="java.util.Vector"%>
@@ -24,21 +38,19 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<div class="jumbotron">
-      <div class="container">
-        <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-      </div>
-    </div>
 
-    <div class="container">
 
-<%
+<div class="container">
+    <div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    
+    <h1 align="center">Αποτέλεσμα μετατροπής</h1>
+    <%
 
 
 
-    try {
+
 
         String contentType = request.getContentType();
         if (contentType != null) {
@@ -49,14 +61,13 @@
 
             String property = mrequest.getParameter("property");//"ogr:geometryProperty"; //
             String namespaces = mrequest.getParameter("namespaces");    //=xmlns:ogr='http://ogr.maptools.org/'"
-
-
+          
             CosUploadFile file = (CosUploadFile) myhash.get("fileToUpload");
             String strings = new String(file.getData());
-
+           // myhash.get("fileToUpload")
             Random myr = new Random();
             String filename = "" + myr.nextInt(Integer.MAX_VALUE);
-            FileOutputStream outo = new FileOutputStream(filename + ".gml");
+            FileOutputStream outo = new FileOutputStream("docroot/" + filename + ".gml");
             outo.write(file.getData());
             outo.close();
 
@@ -80,26 +91,40 @@
             FileOutputStream fostream = new FileOutputStream("docroot/" + filename + ".xsl"); // destination file   
             int temp;
             while ((temp = sistream.read()) != -1) {
-                    fostream.write(temp);	// to write to file 
+                fostream.write(temp);	// to write to file 
             }
             fostream.close();
             sistream.close();
 
 
 
-
+            File filetodelete;
             Kernow mytest = new Kernow();
+            Source mysource = new StreamSource(new File("docroot/" + filename + ".xsl"));//=new Source();
 
-            mytest.runSingleFileTransform(filename + ".gml", "docroot/" + filename + ".xsl", "docroot/" + filename + ".rdf");
+            try {
+                TransformerFactory transFactory = TransformerFactory.newInstance();
+                Transformer transformer;
+                transformer = transFactory.newTransformer(mysource);
+             
+    
+                mytest.runSingleFileTransform("docroot/" + filename + ".gml", "docroot/" + filename + ".xsl", "docroot/" + filename + ".rdf");
+       out.print("<p>The file has been successfully converted</p>"
+                    + "<a href='download.jsp?file=" + filename + "' target='_blank' >download</a>");           
 
-            File filetodelete = new File(filename + ".gml");
+     } catch (Exception ex) {
+     
+                out.print("<p>" + ex.toString() + "<p>");
+                out.print("<p>Some Prefix is not Set, or file not GML</p>");
+            }
+
+
+            /* */        filetodelete = new File("docroot/" + filename + ".xsl");
             if (filetodelete.exists()) {
                 filetodelete.delete();
             }
-            out.print("<p>doulepse</p>"
-                    + "<a href='download.jsp?file=" + filename + "' target='_blank' >download</a>");
 
-            filetodelete = new File("docroot/" + filename + ".xsl");
+            filetodelete = new File("docroot/" + filename + ".gml");
             if (filetodelete.exists()) {
                 filetodelete.delete();
             }
@@ -125,17 +150,15 @@
 
 
 
-    } catch (Exception ex) {
-        System.out.println(ex.toString());
-        out.println(ex.toString());
-        // TODO handle custom exceptions here
-    }
-
-
-
-%>
 
 
 
 
-<%@include file="footer.jsp" %>
+    %>
+
+
+</div>
+  <div class="col-md-2"></div>
+</div>
+
+    <%@include file="footer.jsp" %>
