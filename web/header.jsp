@@ -18,7 +18,7 @@
           
             <div class="navbar-header">
           <ul class="nav navbar-nav">
-            <li ><a href="#">Οδηγίες</a></li>
+            <li ><a href="#">Instructions</a></li>
            </ul>
                 </div>
      <!--   <div class="navbar-collapse collapse">

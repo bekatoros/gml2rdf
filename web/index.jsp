@@ -48,7 +48,7 @@ xmlns:strdf="http://www.strabon.di.uoa.gr/"</textarea>
             
         </div>
         <div class="form-group">
-            <label class="col-sm-2 control-label" for='fileToUpload' required>Επιλογή αρχείου:</label> 
+            <label class="col-sm-2 control-label" for='fileToUpload' required>Select file:</label> 
              <div class="col-sm-offset-4  col-sm-6">
       <INPUT type='file' name='fileToUpload' required class="input-file"  id='fileToUpload' onchange='fileSelected();' />  
       </div>
@@ -56,7 +56,7 @@ xmlns:strdf="http://www.strabon.di.uoa.gr/"</textarea>
 
         <div class="form-group">
              <div class="col-sm-offset-6 col-sm-6">
-                 <button type="submit" id='bt1' class="btn btn-default">Υποβολή</button>
+                 <button type="submit" id='bt1' class="btn btn-default">Submit</button>
           </div>
         </div>
            </br>
