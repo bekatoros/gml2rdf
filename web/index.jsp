@@ -47,8 +47,23 @@ xmlns:strdf="http://www.strabon.di.uoa.gr/"</textarea>
             </div>
             
         </div>
+             
         <div class="form-group">
-            <label class="col-sm-2 control-label" for='fileToUpload' required>Select file:</label> 
+             <label class="col-sm-2 control-label"  required>Upload to server</label> 
+         
+            <div class='col-sm-offset-4  col-sm-6 checkbox'  >
+
+        <label><input id='serverupload' name='serverupload' type="checkbox" >Upload to server </label>
+
+    </div></div>
+            <div class="form-group">
+            <label class="col-sm-2 control-label" for='serverurl'>Server URL</label> 
+             <div class="col-sm-10">
+                 <INPUT  type="text" id="serverurl" class="form-control" name='serverurl'  placeholder='e.g. http://localhost'  />
+          </div>
+            
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for='fileToUpload' required>Select file</label> 
              <div class="col-sm-offset-4  col-sm-6">
       <INPUT type='file' name='fileToUpload' required class="input-file"  id='fileToUpload' onchange='fileSelected();' />  
       </div>

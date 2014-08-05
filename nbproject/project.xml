@@ -11,6 +11,10 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
+                    <file>${file.reference.rdf2rdf-1.0.1-2.3.1.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
                     <file>${file.reference.uploadbean.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
@@ -19,7 +23,7 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.Kernow_1.7.2-lib}</file>
+                    <file>${file.reference.kernow_lib-lib}</file>
                     <path-in-war>WEB-INF/classes</path-in-war>
                 </library>
                 <library dirs="200">
@@ -78,18 +82,22 @@
                     <file>${file.reference.xml-apis.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
+                <library dirs="200">
+                    <file>${file.reference.jts-1.13.zip}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.ogc-tools-gml-jts-1.0.2.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
             </web-module-libraries>
             <web-module-additional-libraries>
                 <library dirs="200">
-                    <file>${file.reference.Kernow_1.7.2-lib}</file>
-                    <path-in-war>/</path-in-war>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.kernow.jar}</file>
-                    <path-in-war>/</path-in-war>
-                </library>
-                <library dirs="200">
                     <file>${file.reference.cos-09May2002.jar}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.rdf2rdf-1.0.1-2.3.1.jar}</file>
                     <path-in-war>/</path-in-war>
                 </library>
                 <library dirs="200">
@@ -97,15 +105,83 @@
                     <path-in-war>/</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.convert_1.xsl}</file>
+                    <file>${file.reference.kernow.jar}</file>
                     <path-in-war>/</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.convert_2.xsl}</file>
+                    <file>${file.reference.kernow_lib-lib}</file>
                     <path-in-war>/</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.convert_3.xsl}</file>
+                    <file>${file.reference.AutoComplete.License.txt}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.ant-launcher.jar}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.ant.jar}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.autocomplete.jar}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.cupv10k-runtime.jar}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.icu4j.jar}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.org.eclipse.wst.xml.xpath2.processor_1.1.0.jar}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.resolver.jar}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.rsyntaxtextarea.jar}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.saxon9he.jar}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.serializer.jar}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.splash.gif}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.swing-layout-1.0.4.jar}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.xercesImpl.jar}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.xercesSamples.jar}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.xml-apis.jar}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.jts-1.13.zip}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.ogc-tools-gml-jts-1.0.2.jar}</file>
                     <path-in-war>/</path-in-war>
                 </library>
             </web-module-additional-libraries>
