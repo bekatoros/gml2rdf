@@ -142,7 +142,7 @@
                         //myconverter();
                         
                         out.print("<p>The file has been successfully converted</p>"
-                                + "<a href='download.jsp?file=" + filename + "' target='_blank' >Download RDF file</a>"
+                                + "<a href='download.jsp?file=" + filename +"&ftype=rdf"+ "' target='_blank' >Download RDF file</a>"
                                 + "</br><a href='index.jsp ' > Convert new GML </a></br>");
 
                        

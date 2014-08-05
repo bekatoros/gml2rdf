@@ -6,7 +6,8 @@
 <%    
 
   String name=request.getParameter( "file" );
-  String filename = name+".rdf";   
+  String ftype=request.getParameter( "ftype" );
+  String filename = name+"."+ftype;   
   String filepath = "../docroot";   
   response.setContentType("APPLICATION/octet-stream");   
   response.setHeader("Content-Disposition","attachment; filename=\"" + filename + "\"");   
@@ -25,26 +26,14 @@
   }
   
   catch(Exception ex){}
-  /*
-  java.io.FileInputStream fileInputStream=new java.io.FileInputStream(filepath+"/"+filename);  
-     response.setContentLength(fileInputStream.available());
-  byte b[]= new byte[fileInputStream.available()];
-    //        fileInputStream.read(b)
-            
-      OutputStream os = response.getOutputStream();
-      os.write(b);
-      os.close();
-      
-      response.flushBuffer();
-            /*int i;   
-  
-  while ((i=fileInputStream.read()) != -1) {  
-    out.write(i);   
-  }   
-  fileInputStream.close();   
-  */
+ 
    File filetodelete = new File(filepath+"/"+filename);
        if(filetodelete.exists()) { 
         filetodelete.delete();
         }
+     File filetodelete2 = new File(filepath+"/"+name+".rdf");
+       if(filetodelete2.exists()) { 
+        filetodelete2.delete();
+        }   
+       
 %> 
