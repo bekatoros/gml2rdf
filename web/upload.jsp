@@ -92,6 +92,7 @@
                     String namespaces = mrequest.getParameter("namespaces");    //=xmlns:ogr='http://ogr.maptools.org/'"
                     String serverupload = mrequest.getParameter("serverupload");
                     String serverurl = mrequest.getParameter("serverurl");
+                    String filetype = mrequest.getParameter("filetype");
 
                     CosUploadFile file = (CosUploadFile) myhash.get("fileToUpload");
                     String strings = new String(file.getData());
@@ -137,7 +138,7 @@
 
                         mytest.runSingleFileTransform("../docroot/" + filename + ".gml", "../docroot/" + filename + ".xsl", "../docroot/" + filename + ".rdf");
 
-                        String rdfto[]= {"../docroot/"+filename+".rdf",".nt"};
+                        String rdfto[]= {"../docroot/"+filename+".rdf","."+filetype};
                         RDF2RDF.main(rdfto);// myconverter;// = new RDF2RDF(rdfto); 
                         //myconverter();
                         

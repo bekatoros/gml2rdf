@@ -47,7 +47,19 @@ xmlns:strdf="http://www.strabon.di.uoa.gr/"</textarea>
             </div>
             
         </div>
-             
+    <div class="form-group">
+            <label class="col-sm-2 control-label" for='filetype'>Output Filetype</label> 
+
+            <div class="col-sm-10">
+                <select type="text" class="form-control" id="filetype" name='filetype' required  >
+                    <option value="rdf" >RDF/XML</option>
+                    <option value="n3">N3</option>
+                    <option value="nt" >NT</option>
+                    <option value="ttl" >TTL</option>
+                </select>
+            </div>
+            
+        </div>             
         <div class="form-group">
              <label class="col-sm-2 control-label"  required>Upload to server</label> 
          
