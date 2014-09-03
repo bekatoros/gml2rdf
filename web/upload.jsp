@@ -1,4 +1,5 @@
 
+
 <%@page import="org.xml.sax.Locator"%>
 <%@page import="org.xml.sax.helpers.DefaultHandler"%>
 <%@page import="org.xml.sax.ErrorHandler"%>
@@ -139,15 +140,17 @@
                         mytest.runSingleFileTransform("../docroot/" + filename + ".gml", "../docroot/" + filename + ".xsl", "../docroot/" + filename + ".rdf");
 
                         String rdfto[]= {"../docroot/"+filename+".rdf","."+filetype};
+                        if(!filetype.equals("rdf")){
                         RDF2RDF.main(rdfto);// myconverter;// = new RDF2RDF(rdfto); 
+                        }
                         //myconverter();
                         
                         out.print("<p>The file has been successfully converted</p>"
-                                + "<a href='download.jsp?file=" + filename +"&ftype=rdf"+ "' target='_blank' >Download RDF file</a>"
+                                + "<a href='download.jsp?file=" + filename +"&ftype="+filetype+ "' target='_blank' >Download RDF file</a>"
                                 + "</br><a href='index.jsp ' > Convert new GML </a></br>");
 
                        
-  /*                      if (serverupload != null) {
+  /*                     if (serverupload != null) {
                             SPARQLEndpoint endpoint;
                             String[] testQueries;
                             stSPARQLQueryResultFormat format;
@@ -155,10 +158,10 @@
                         // initialize endpoint	
 
                             try {
-                        //        endpoint = new SPARQLEndpoint(serverurl, 8080, "strabon-endpoint/Query");
+                            endpoint = new SPARQLEndpoint(serverurl, 8080, "strabon-endpoint/Query");
 
-                          //      res1 = endpoint.store("../docroot/" + filename + ".rdf", RDFFormat.RDFXML, new URL("file://" + filename));
-                     //   endpoint.store(data, format, namedGraph)
+                         res1 = endpoint.store("../docroot/" + filename + ".rdf", RDFFormat.RDFXML, new URL("file://" + filename));
+                   //     endpoint.store(data, format, namedGraph);
 
                                 if (res1) {
                                     out.print("<p>The file has been successfully uploaded to " + serverurl + "</p>");
