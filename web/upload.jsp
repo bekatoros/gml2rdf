@@ -1,5 +1,7 @@
 
 
+<%@page import="org.openrdf.query.resultio.stSPARQLQueryResultFormat"%>
+<%@page import="eu.earthobservatory.org.StrabonEndpoint.client.SPARQLEndpoint"%>
 <%@page import="org.xml.sax.Locator"%>
 <%@page import="org.xml.sax.helpers.DefaultHandler"%>
 <%@page import="org.xml.sax.ErrorHandler"%>
@@ -94,6 +96,7 @@
                     String serverupload = mrequest.getParameter("serverupload");
                     String serverurl = mrequest.getParameter("serverurl");
                     String filetype = mrequest.getParameter("filetype");
+                    String kwt = mrequest.getParameter("kwt");
 
                     CosUploadFile file = (CosUploadFile) myhash.get("fileToUpload");
                     String strings = new String(file.getData());
@@ -104,7 +107,7 @@
                     outo.write(file.getData());
                     outo.close();
 
-                    /* */ FileInputStream fistream1 = new FileInputStream("../docroot/convert_1.xsl"); // first source file
+                    FileInputStream fistream1 = new FileInputStream("../docroot/convert_1.xsl"); // first source file
                     FileInputStream fistream2 = new FileInputStream("../docroot/convert_2.xsl"); //second source file   
                     FileInputStream fistream3 = new FileInputStream("../docroot/convert_3.xsl"); //third source file   
 
@@ -124,44 +127,90 @@
                     int temp;
                     while ((temp = sistream.read()) != -1) {
                         fostream.write(temp);	// to write to file 
+
                     }
+                    fostream.flush();
                     fostream.close();
                     sistream.close();
+                    fistream1.close();
+
+                    fistream1_1.close();
+                    fistream2.close();
+                    fistream2_1.close();
+                    fistream3.close();
+
+                    if (kwt != null) {
+                        FileInputStream fistream5 = new FileInputStream("../docroot/convert_1.xsl"); // first source file
+                        InputStream fistream5_1 = new ByteArrayInputStream(namespaces.getBytes("UTF-8"));
+
+                        FileInputStream fistream4 = new FileInputStream("../docroot/toWKT_part2.xsl");
+
+                        Vector<InputStream> inputStreams2 = new Vector<InputStream>();
+                        inputStreams2.add(fistream5);
+                        inputStreams2.add(fistream5_1);
+                        inputStreams2.add(fistream4);
+                        Enumeration<InputStream> enu2 = inputStreams2.elements();
+                        SequenceInputStream sistream2 = new SequenceInputStream(enu2);
+                        FileOutputStream fostream2 = new FileOutputStream("../docroot/" + filename + "-1.xsl"); // destination file   
+
+                        int temp2;
+                        while ((temp2 = sistream2.read()) != -1) {
+                            fostream2.write(temp2);	// to write to file 
+                        }
+                        fostream2.close();
+                        sistream2.close();
+
+                    }
 
                     File filetodelete;
                     Kernow mytest = new Kernow();
-                 //   Source mysource = new StreamSource(new File("../docroot/" + filename + ".xsl"));//=new Source();
-
+                    //   Source mysource = new StreamSource(new File("../docroot/" + filename + ".xsl"));//=new Source();
+String extra="";
                     try {
                      //   TransformerFactory transFactory = TransformerFactory.newInstance();
-                      //  Transformer transformer;
-                      //  transformer = transFactory.newTransformer(mysource);
+                        //  Transformer transformer;
+                        //  transformer = transFactory.newTransformer(mysource);
 
                         mytest.runSingleFileTransform("../docroot/" + filename + ".gml", "../docroot/" + filename + ".xsl", "../docroot/" + filename + ".rdf");
-
-                        String rdfto[]= {"../docroot/"+filename+".rdf","."+filetype};
-                        if(!filetype.equals("rdf")){
-                        RDF2RDF.main(rdfto);// myconverter;// = new RDF2RDF(rdfto); 
+                        extra = "";
+                        if (kwt != null) {
+                            extra = "-1";
                         }
+
+                        String rdfto[] = {"../docroot/" + filename + extra + ".rdf", "." + filetype};
+
+                        if (kwt != null) {
+
+                            mytest.runSingleFileTransform("../docroot/" + filename + ".rdf", "../docroot/" + filename + "-1.xsl", "../docroot/" + filename + "-1.rdf");
+                        }
+
+                        if (!filetype.equals("rdf")) {
+                            RDF2RDF.main(rdfto);// myconverter;// = new RDF2RDF(rdfto); 
+                        }
+                        if (kwt != null) {
+               /**/ filetodelete = new File("../docroot/" + filename + ".rdf");
+                    if (filetodelete.exists()) {
+                          filetodelete.delete();
+                    }
+       
+   }
                         //myconverter();
-                        
                         out.print("<p>The file has been successfully converted</p>"
-                                + "<a href='download.jsp?file=" + filename +"&ftype="+filetype+ "' target='_blank' >Download RDF file</a>"
+                                + "<a href='download.jsp?file=" + filename +extra+ "&ftype=" + filetype + "' target='_blank' >Download RDF file</a>"
                                 + "</br><a href='index.jsp ' > Convert new GML </a></br>");
 
-                       
-  /*                     if (serverupload != null) {
+                        /**/ if (serverupload != null) {
                             SPARQLEndpoint endpoint;
                             String[] testQueries;
                             stSPARQLQueryResultFormat format;
                             boolean res1 = false;
-                        // initialize endpoint	
+                            // initialize endpoint	
 
                             try {
-                            endpoint = new SPARQLEndpoint(serverurl, 8080, "strabon-endpoint/Query");
-
-                         res1 = endpoint.store("../docroot/" + filename + ".rdf", RDFFormat.RDFXML, new URL("file://" + filename));
-                   //     endpoint.store(data, format, namedGraph);
+                                endpoint = new SPARQLEndpoint(serverurl, 8080, "strabon-endpoint/Query");
+   
+                                res1 = endpoint.store("../docroot/" + filename + ".rdf", RDFFormat.RDFXML, new URL("file://" + filename));
+                                //     endpoint.store(data, format, namedGraph);
 
                                 if (res1) {
                                     out.print("<p>The file has been successfully uploaded to " + serverurl + "</p>");
@@ -169,22 +218,28 @@
                                     out.print("<p>The file could not be uploaded to server " + serverurl + ":8080 </p>");
                                 }
                             } catch (Exception ex) {
-                                out.println("<p>The server "+serverurl+" is not accessible</p>");
+                                out.println("<p>The server " + serverurl + " is not accessible</p>");
                             }
 
-                            
                         }
-*/
+                        /**/
                     } catch (Exception ex) {
 
                         out.print("<p>Some Prefix is not Set, or file not GML</p>"
-                                + "    <a href='index.jsp'>Add the missing Prefixes and re-upload you GML file  </a>"+ex.toString());
+                                + "    <a href='index.jsp'>Add the missing Prefixes and re-upload you GML file  </a>" + ex.toString());
                     }
 
+   if (kwt != null) {
 
-                    /**/  filetodelete = new File("../docroot/" + filename + ".xsl");
+                     
+                    /**/ filetodelete = new File("../docroot/" + filename + "-1.xsl");
                     if (filetodelete.exists()) {
-                        filetodelete.delete();
+                          filetodelete.delete();
+                    }
+   }
+                    /**/ filetodelete = new File("../docroot/" + filename + ".xsl");
+                    if (filetodelete.exists()) {
+                           filetodelete.delete();
                     }
 
                     filetodelete = new File("../docroot/" + filename + ".gml");
@@ -209,60 +264,57 @@
                      }
                      */   // "../docroot/" + filename + ".rdf"
                     //    String wktStr = "";
-
            //Charset charst = new Charset("utf-8");
-                        // List<String> lines = Files.readAllLines(Paths.get("../docroot/" + filename + ".rdf"), StandardCharsets.UTF_8);
-                        //FileReader  fr = new FileReader("../docroot/" + filename + ".rdf");
-        //String fname= "../docroot/" + filename + ".rdf";
-                      //  File striny = new File("../docroot/" + filename + ".gml");
-          // FileReader fr = new FileReader(fname);
-                        // out.print(fr.toString());
-                        //File fr= new File("../docroot/" + filename + ".rdf");
-           
+                    // List<String> lines = Files.readAllLines(Paths.get("../docroot/" + filename + ".rdf"), StandardCharsets.UTF_8);
+                    //FileReader  fr = new FileReader("../docroot/" + filename + ".rdf");
+                    //String fname= "../docroot/" + filename + ".rdf";
+                    //  File striny = new File("../docroot/" + filename + ".gml");
+                    // FileReader fr = new FileReader(fname);
+                    // out.print(fr.toString());
+                    //File fr= new File("../docroot/" + filename + ".rdf");
                         // out.print(striny);
                       /*   try{	
-                        PrecisionModel precisionModel = new PrecisionModel(1000);
-                         GeometryFactory geometryFactory = new GeometryFactory(precisionModel);
-                         GMLHandler gr = new GMLHandler(geometryFactory,new DefaultHandler());
-GMLReader gmlr = new GMLReader();                        
-//gmlr.
-// gmlReader.load(new DriverProperties()) ; 
-                         //gr.setDocumentLocator(new Locator());
-                       //  gr.
-                         Geometry g = gr.getGeometry();
-                         WKTWriter writer = new WKTWriter();
+                     PrecisionModel precisionModel = new PrecisionModel(1000);
+                     GeometryFactory geometryFactory = new GeometryFactory(precisionModel);
+                     GMLHandler gr = new GMLHandler(geometryFactory,new DefaultHandler());
+                     GMLReader gmlr = new GMLReader();                        
+                     //gmlr.
+                     // gmlReader.load(new DriverProperties()) ; 
+                     //gr.setDocumentLocator(new Locator());
+                     //  gr.
+                     Geometry g = gr.getGeometry();
+                     WKTWriter writer = new WKTWriter();
        
-                         if (null != g) {
-                         wktStr = writer.write(g);
+                     if (null != g) {
+                     wktStr = writer.write(g);
                          
                           
-                         System.out.println(wktStr);
+                     System.out.println(wktStr);
 
-                         }
-                         }catch(Exception ex1)
-                         {
-                         out.print(ex1.toString());
-                         }
-                        */
-                        /*     try{
+                     }
+                     }catch(Exception ex1)
+                     {
+                     out.print(ex1.toString());
+                     }
+                     */
+                    /*     try{
                     
 
-                         JAXBContext context = JAXBContext.newInstance("org.jvnet.ogc.gml.v_3_1_1.jts");
+                     JAXBContext context = JAXBContext.newInstance("org.jvnet.ogc.gml.v_3_1_1.jts");
              
-                         WKTWriter wktWriter = new WKTWriter();
+                     WKTWriter wktWriter = new WKTWriter();
  
-                         Unmarshaller unmarshaller = context.createUnmarshaller();
-                         unmarshaller.setProperty(name, value);
-                         Geometry geometry = (Geometry) unmarshaller.unmarshal(striny);
+                     Unmarshaller unmarshaller = context.createUnmarshaller();
+                     unmarshaller.setProperty(name, value);
+                     Geometry geometry = (Geometry) unmarshaller.unmarshal(striny);
  
-                         System.out.println(wktWriter.write(geometry));
+                     System.out.println(wktWriter.write(geometry));
         
-                         }catch(Exception ex1)
-                         {
-                         out.print(ex1.toString());
-                         }
-                         */
-                     
+                     }catch(Exception ex1)
+                     {
+                     out.print(ex1.toString());
+                     }
+                     */
                 }
 
 

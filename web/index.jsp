@@ -68,6 +68,14 @@ xmlns:strdf="http://www.strabon.di.uoa.gr/"</textarea>
         <label><input id='serverupload' name='serverupload' type="checkbox" >Upload to server </label>
 
     </div></div>
+         <div class="form-group">
+             <label class="col-sm-2 control-label"  required>Transform to WKT </label> 
+         
+            <div class='col-sm-offset-4  col-sm-6 checkbox'  >
+
+        <label><input id='serverupload' name='kwt' type="checkbox" > Transform to WKT ? </label>
+
+    </div></div>
             <div class="form-group">
             <label class="col-sm-2 control-label" for='serverurl'>Server URL</label> 
              <div class="col-sm-10">
