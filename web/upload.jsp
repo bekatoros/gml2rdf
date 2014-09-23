@@ -110,16 +110,21 @@
                     FileInputStream fistream1 = new FileInputStream("../docroot/convert_1.xsl"); // first source file
                     FileInputStream fistream2 = new FileInputStream("../docroot/convert_2.xsl"); //second source file   
                     FileInputStream fistream3 = new FileInputStream("../docroot/convert_3.xsl"); //third source file   
+                    FileInputStream fistream4 = new FileInputStream("../docroot/convert_4.xsl"); //third source file   
 
+                    
                     InputStream fistream1_1 = new ByteArrayInputStream(namespaces.getBytes("UTF-8"));
                     InputStream fistream2_1 = new ByteArrayInputStream(property.getBytes("UTF-8"));
+                    InputStream fistream3_1 = new ByteArrayInputStream(property.getBytes("UTF-8"));
 
                     Vector<InputStream> inputStreams = new Vector<InputStream>();
                     inputStreams.add(fistream1);
                     inputStreams.add(fistream1_1);
                     inputStreams.add(fistream2);
                     inputStreams.add(fistream2_1);
-                    inputStreams.add(fistream3);
+                    inputStreams.add(fistream3);                    
+                    inputStreams.add(fistream3_1);
+                    inputStreams.add(fistream4);
                     Enumeration<InputStream> enu = inputStreams.elements();
                     SequenceInputStream sistream = new SequenceInputStream(enu);
                     FileOutputStream fostream = new FileOutputStream("../docroot/" + filename + ".xsl"); // destination file   
@@ -138,17 +143,18 @@
                     fistream2.close();
                     fistream2_1.close();
                     fistream3.close();
-
+                    fistream4.close();
+                    
                     if (kwt != null) {
                         FileInputStream fistream5 = new FileInputStream("../docroot/convert_1.xsl"); // first source file
                         InputStream fistream5_1 = new ByteArrayInputStream(namespaces.getBytes("UTF-8"));
 
-                        FileInputStream fistream4 = new FileInputStream("../docroot/toWKT_part2.xsl");
+                        FileInputStream fistream6 = new FileInputStream("../docroot/toWKT_part2.xsl");
 
                         Vector<InputStream> inputStreams2 = new Vector<InputStream>();
                         inputStreams2.add(fistream5);
                         inputStreams2.add(fistream5_1);
-                        inputStreams2.add(fistream4);
+                        inputStreams2.add(fistream6);
                         Enumeration<InputStream> enu2 = inputStreams2.elements();
                         SequenceInputStream sistream2 = new SequenceInputStream(enu2);
                         FileOutputStream fostream2 = new FileOutputStream("../docroot/" + filename + "-1.xsl"); // destination file   
@@ -234,12 +240,12 @@ String extra="";
                      
                     /**/ filetodelete = new File("../docroot/" + filename + "-1.xsl");
                     if (filetodelete.exists()) {
-                          filetodelete.delete();
+                         filetodelete.delete();
                     }
    }
                     /**/ filetodelete = new File("../docroot/" + filename + ".xsl");
                     if (filetodelete.exists()) {
-                           filetodelete.delete();
+                         filetodelete.delete();
                     }
 
                     filetodelete = new File("../docroot/" + filename + ".gml");
