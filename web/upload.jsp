@@ -145,12 +145,16 @@
                     fistream3.close();
                     fistream4.close();
                     
-                    if (kwt != null) {
+                    if (!kwt.equals("gml")) {
                         FileInputStream fistream5 = new FileInputStream("../docroot/convert_1.xsl"); // first source file
                         InputStream fistream5_1 = new ByteArrayInputStream(namespaces.getBytes("UTF-8"));
-
-                        FileInputStream fistream6 = new FileInputStream("../docroot/toWKT_part2.xsl");
-
+                        FileInputStream fistream6;
+                        if (kwt.equals("geosparql")) {    
+                        fistream6 = new FileInputStream("../docroot/toWKT_part2_geosparql.xsl");
+                        }
+                        else{
+                       fistream6 = new FileInputStream("../docroot/toWKT_part2_strdf.xsl");
+                        }
                         Vector<InputStream> inputStreams2 = new Vector<InputStream>();
                         inputStreams2.add(fistream5);
                         inputStreams2.add(fistream5_1);
@@ -179,13 +183,13 @@ String extra="";
 
                         mytest.runSingleFileTransform("../docroot/" + filename + ".gml", "../docroot/" + filename + ".xsl", "../docroot/" + filename + ".rdf");
                         extra = "";
-                        if (kwt != null) {
+                        if (!kwt.equals("gml")) {
                             extra = "-1";
                         }
 
                         String rdfto[] = {"../docroot/" + filename + extra + ".rdf", "." + filetype};
 
-                        if (kwt != null) {
+                        if (!kwt.equals("gml")) {
 
                             mytest.runSingleFileTransform("../docroot/" + filename + ".rdf", "../docroot/" + filename + "-1.xsl", "../docroot/" + filename + "-1.rdf");
                         }
@@ -193,7 +197,7 @@ String extra="";
                         if (!filetype.equals("rdf")) {
                             RDF2RDF.main(rdfto);// myconverter;// = new RDF2RDF(rdfto); 
                         }
-                        if (kwt != null) {
+                        if (!kwt.equals("gml")) {
                /**/ filetodelete = new File("../docroot/" + filename + ".rdf");
                     if (filetodelete.exists()) {
                           filetodelete.delete();
@@ -235,12 +239,12 @@ String extra="";
                                 + "    <a href='index.jsp'>Add the missing Prefixes and re-upload you GML file  </a>" + ex.toString());
                     }
 
-   if (kwt != null) {
+   if (!kwt.equals("gml")) {
 
                      
                     /**/ filetodelete = new File("../docroot/" + filename + "-1.xsl");
                     if (filetodelete.exists()) {
-                         filetodelete.delete();
+                       //  filetodelete.delete();
                     }
    }
                     /**/ filetodelete = new File("../docroot/" + filename + ".xsl");
@@ -253,74 +257,6 @@ String extra="";
                         filetodelete.delete();
                     }
 
-                    /*http://openrdf.callimachus.net/sesame/2.7/docs/users.docbook?view#section-repository-api
-                     * Repository repo = new SailRepository(     new ForwardChainingRDFSInferencer(      new MemoryStore()));
-                     repo.initialize();
-                     Repository nativeRep = new SailRepository(new NativeStore());
-                     nativeRep.initialize();
- 
-                     String fileName = "/path/to/example.rdf";
-                     File dataFile = new File(fileName);
-                     RepositoryConnection conn = nativeRep.getConnection();
-                     try {
-                     conn.add(dataFile, "file://" + fileName, RDFFormat.forFileName(fileName));
-                     }
-                     finally {
-                     conn.close();
-                     }
-                     */   // "../docroot/" + filename + ".rdf"
-                    //    String wktStr = "";
-           //Charset charst = new Charset("utf-8");
-                    // List<String> lines = Files.readAllLines(Paths.get("../docroot/" + filename + ".rdf"), StandardCharsets.UTF_8);
-                    //FileReader  fr = new FileReader("../docroot/" + filename + ".rdf");
-                    //String fname= "../docroot/" + filename + ".rdf";
-                    //  File striny = new File("../docroot/" + filename + ".gml");
-                    // FileReader fr = new FileReader(fname);
-                    // out.print(fr.toString());
-                    //File fr= new File("../docroot/" + filename + ".rdf");
-                        // out.print(striny);
-                      /*   try{	
-                     PrecisionModel precisionModel = new PrecisionModel(1000);
-                     GeometryFactory geometryFactory = new GeometryFactory(precisionModel);
-                     GMLHandler gr = new GMLHandler(geometryFactory,new DefaultHandler());
-                     GMLReader gmlr = new GMLReader();                        
-                     //gmlr.
-                     // gmlReader.load(new DriverProperties()) ; 
-                     //gr.setDocumentLocator(new Locator());
-                     //  gr.
-                     Geometry g = gr.getGeometry();
-                     WKTWriter writer = new WKTWriter();
-       
-                     if (null != g) {
-                     wktStr = writer.write(g);
-                         
-                          
-                     System.out.println(wktStr);
-
-                     }
-                     }catch(Exception ex1)
-                     {
-                     out.print(ex1.toString());
-                     }
-                     */
-                    /*     try{
-                    
-
-                     JAXBContext context = JAXBContext.newInstance("org.jvnet.ogc.gml.v_3_1_1.jts");
-             
-                     WKTWriter wktWriter = new WKTWriter();
- 
-                     Unmarshaller unmarshaller = context.createUnmarshaller();
-                     unmarshaller.setProperty(name, value);
-                     Geometry geometry = (Geometry) unmarshaller.unmarshal(striny);
- 
-                     System.out.println(wktWriter.write(geometry));
-        
-                     }catch(Exception ex1)
-                     {
-                     out.print(ex1.toString());
-                     }
-                     */
                 }
 
 
