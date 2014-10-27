@@ -100,6 +100,13 @@
 
                     CosUploadFile file = (CosUploadFile) myhash.get("fileToUpload");
                     String strings = new String(file.getData());
+                    String datatype=""; //"><strdf:hasGeometry rdf:datatype="http://strdf.di.uoa.gr/ontology#WKT">
+                    if (kwt.equals("gml")) {
+                    datatype ="\"><strdf:hasGeometry rdf:datatype=\"http://strdf.di.uoa.gr/ontology#GML\" >";
+                    }else{
+                    datatype ="\"><strdf:hasGeometry rdf:datatype=\"http://strdf.di.uoa.gr/ontology#WKT\" >";
+                    }        
+                    
                     // myhash.get("fileToUpload")
                     Random myr = new Random();
                     String filename = "" + myr.nextInt(Integer.MAX_VALUE);
@@ -115,13 +122,15 @@
                     
                     InputStream fistream1_1 = new ByteArrayInputStream(namespaces.getBytes("UTF-8"));
                     InputStream fistream2_1 = new ByteArrayInputStream(property.getBytes("UTF-8"));
+                    InputStream fistream2_2 = new ByteArrayInputStream(datatype.getBytes("UTF-8"));
                     InputStream fistream3_1 = new ByteArrayInputStream(property.getBytes("UTF-8"));
-
+                    
                     Vector<InputStream> inputStreams = new Vector<InputStream>();
                     inputStreams.add(fistream1);
                     inputStreams.add(fistream1_1);
                     inputStreams.add(fistream2);
                     inputStreams.add(fistream2_1);
+                    inputStreams.add(fistream2_2);
                     inputStreams.add(fistream3);                    
                     inputStreams.add(fistream3_1);
                     inputStreams.add(fistream4);
@@ -217,7 +226,7 @@ String extra="";
                             // initialize endpoint	
 
                             try {
-                                endpoint = new SPARQLEndpoint(serverurl, 8080, "strabon-endpoint/Query");
+                                endpoint = new SPARQLEndpoint(serverurl, 8080, "strabon-endpoint-3.2.9/query.jsp");
    
                                 res1 = endpoint.store("../docroot/" + filename + ".rdf", RDFFormat.RDFXML, new URL("file://" + filename));
                                 //     endpoint.store(data, format, namedGraph);
@@ -228,7 +237,7 @@ String extra="";
                                     out.print("<p>The file could not be uploaded to server " + serverurl + ":8080 </p>");
                                 }
                             } catch (Exception ex) {
-                                out.println("<p>The server " + serverurl + " is not accessible</p>");
+                                out.println("<p>The server " + serverurl + " is not accessible</p>"+ex.toString());
                             }
 
                         }
@@ -244,7 +253,7 @@ String extra="";
                      
                     /**/ filetodelete = new File("../docroot/" + filename + "-1.xsl");
                     if (filetodelete.exists()) {
-                       //  filetodelete.delete();
+                         filetodelete.delete();
                     }
    }
                     /**/ filetodelete = new File("../docroot/" + filename + ".xsl");

@@ -36,7 +36,9 @@ xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 xmlns:dc="http://purl.org/dc/elements/1.1/"
 xmlns:owl="http://www.w3.org/2002/07/owl#"
 xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-xmlns:strdf="http://www.strabon.di.uoa.gr/"</textarea>
+xmlns:strdf="http://www.strabon.di.uoa.gr/"
+xmlns:geo="http://www.opengis.net/ont/geosparql"
+xmlns:ogr="http://ogr.maptools.org/"</textarea>
                 </div>
         </div>
         <div class="form-group">
