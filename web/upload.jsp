@@ -97,6 +97,7 @@
                     String serverurl = mrequest.getParameter("serverurl");
                     String filetype = mrequest.getParameter("filetype");
                     String kwt = mrequest.getParameter("kwt");
+                    String grsstring = mrequest.getParameter("grs");
 
                     CosUploadFile file = (CosUploadFile) myhash.get("fileToUpload");
                     String strings = new String(file.getData());
@@ -154,19 +155,35 @@
                     fistream3.close();
                     fistream4.close();
                     
+                    String grsdefault="http://www.opengis.net/def/crs/EPSG/0/4326";
+                    if ( !grsstring.equals(""))
+                    {
+                    grsdefault=grsstring;
+                      
+                    }                    
+                    String grs="exclude-result-prefixes='xs' \nversion='2.0'> \n<xsl:output indent='yes'/>\n<xsl:strip-space elements='*'/>"; // Global Reference System
                     if (!kwt.equals("gml")) {
                         FileInputStream fistream5 = new FileInputStream("../docroot/convert_1.xsl"); // first source file
                         InputStream fistream5_1 = new ByteArrayInputStream(namespaces.getBytes("UTF-8"));
+                                                
                         FileInputStream fistream6;
                         if (kwt.equals("geosparql")) {    
                         fistream6 = new FileInputStream("../docroot/toWKT_part2_geosparql.xsl");
-                        }
+                        grs+="<xsl:variable name='epsg'  >&lt;"+grsdefault+"&gt; </xsl:variable>";
+                         }
                         else{
                        fistream6 = new FileInputStream("../docroot/toWKT_part2_strdf.xsl");
+                       grs+="<xsl:variable name='epsg'  >;"+grsdefault+"</xsl:variable>";
+                       
                         }
+                              
+                        InputStream fistream5_2 = new ByteArrayInputStream(grs.getBytes("UTF-8"));
+                                         
+                        out.println(grs);
                         Vector<InputStream> inputStreams2 = new Vector<InputStream>();
                         inputStreams2.add(fistream5);
                         inputStreams2.add(fistream5_1);
+                        inputStreams2.add(fistream5_2);
                         inputStreams2.add(fistream6);
                         Enumeration<InputStream> enu2 = inputStreams2.elements();
                         SequenceInputStream sistream2 = new SequenceInputStream(enu2);
@@ -253,7 +270,7 @@ String extra="";
                      
                     /**/ filetodelete = new File("../docroot/" + filename + "-1.xsl");
                     if (filetodelete.exists()) {
-                         filetodelete.delete();
+                        // filetodelete.delete();
                     }
    }
                     /**/ filetodelete = new File("../docroot/" + filename + ".xsl");

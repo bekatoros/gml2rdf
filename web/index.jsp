@@ -49,6 +49,14 @@ xmlns:ogr="http://ogr.maptools.org/"</textarea>
             </div>
             
         </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for='grs'>Global Reference System</label> 
+
+            <div class="col-sm-10">
+            <input type="text" class="form-control" id="grs" name='grs'  placeholder="Leave empty for http://www.opengis.net/def/crs/EPSG/0/4326" />
+            </div>
+            
+        </div>        
     <div class="form-group">
             <label class="col-sm-2 control-label" for='filetype'>Output Filetype</label> 
 
