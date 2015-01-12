@@ -276,7 +276,7 @@
    }
                     /**/ filetodelete = new File("../docroot/" + filename + ".xsl");
                     if (filetodelete.exists()) {
-                       filetodelete.delete();
+                        filetodelete.delete();
                     }
 
                     filetodelete = new File("../docroot/" + filename + ".gml");
