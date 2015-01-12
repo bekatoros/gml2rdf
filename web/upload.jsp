@@ -65,7 +65,7 @@
 <%@page import="java.io.OutputStream"%>
 <%@page import="java.io.DataInputStream"%>
 <%@page import="java.lang.Integer"%>
-<%@page import="java.sql.*" %>
+
 
 
 <%@include file="header.jsp" %>
@@ -115,6 +115,11 @@
                     outo.write(file.getData());
                     outo.close();
 
+                    
+                    Kernow preprocess = new Kernow();
+                    preprocess.runSingleFileTransform("../docroot/" + filename + ".gml", "../docroot/preprocess.xsl", "../docroot/" + filename + ".gml");
+                       
+                    
                     FileInputStream fistream1 = new FileInputStream("../docroot/convert_1.xsl"); // first source file
                     FileInputStream fistream2 = new FileInputStream("../docroot/convert_2.xsl"); //second source file   
                     FileInputStream fistream3 = new FileInputStream("../docroot/convert_3.xsl"); //third source file   
@@ -179,7 +184,7 @@
                               
                         InputStream fistream5_2 = new ByteArrayInputStream(grs.getBytes("UTF-8"));
                                          
-                        out.println(grs);
+                       
                         Vector<InputStream> inputStreams2 = new Vector<InputStream>();
                         inputStreams2.add(fistream5);
                         inputStreams2.add(fistream5_1);
@@ -200,13 +205,9 @@
 
                     File filetodelete;
                     Kernow mytest = new Kernow();
-                    //   Source mysource = new StreamSource(new File("../docroot/" + filename + ".xsl"));//=new Source();
-String extra="";
+                    String extra="";
                     try {
-                     //   TransformerFactory transFactory = TransformerFactory.newInstance();
-                        //  Transformer transformer;
-                        //  transformer = transFactory.newTransformer(mysource);
-
+                     
                         mytest.runSingleFileTransform("../docroot/" + filename + ".gml", "../docroot/" + filename + ".xsl", "../docroot/" + filename + ".rdf");
                         extra = "";
                         if (!kwt.equals("gml")) {
@@ -226,7 +227,7 @@ String extra="";
                         if (!kwt.equals("gml")) {
                /**/ filetodelete = new File("../docroot/" + filename + ".rdf");
                     if (filetodelete.exists()) {
-                          filetodelete.delete();
+                         filetodelete.delete();
                     }
        
    }
@@ -270,12 +271,12 @@ String extra="";
                      
                     /**/ filetodelete = new File("../docroot/" + filename + "-1.xsl");
                     if (filetodelete.exists()) {
-                        // filetodelete.delete();
+                        filetodelete.delete();
                     }
    }
                     /**/ filetodelete = new File("../docroot/" + filename + ".xsl");
                     if (filetodelete.exists()) {
-                         filetodelete.delete();
+                       filetodelete.delete();
                     }
 
                     filetodelete = new File("../docroot/" + filename + ".gml");

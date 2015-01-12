@@ -82,7 +82,7 @@ xmlns:ogr="http://ogr.maptools.org/"</textarea>
             </div>
             
         </div>  
-        <div class="form-group">
+      <!--  <div class="form-group">
              <label class="col-sm-2 control-label"  required>Upload to server</label> 
          
             <div class='col-sm-offset-4  col-sm-6 checkbox'  >
@@ -96,7 +96,7 @@ xmlns:ogr="http://ogr.maptools.org/"</textarea>
              <div class="col-sm-10">
                  <INPUT  type="text" id="serverurl" class="form-control" name='serverurl'  placeholder='e.g. http://localhost'  />
           </div>  </div>
-            
+            -->
         <div class="form-group">
             <label class="col-sm-2 control-label" for='fileToUpload' required>Select file</label> 
              <div class="col-sm-offset-4  col-sm-6">
