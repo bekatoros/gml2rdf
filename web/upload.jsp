@@ -16,9 +16,7 @@
 
 
 
-<%@page import="javax.xml.bind.Unmarshaller"%>
 
-<%@page import="javax.xml.bind.JAXBContext"%>
 <%@page import="sun.misc.IOUtils"%>
 <%@page import="javax.jms.Session"%>
 
@@ -61,7 +59,6 @@
 <%@page import="javazoom.upload.*"%>
 <%@page import="java.io.DataInputStream"%>
 <%@page import="java.lang.Integer"%>
-<%@page import="java.sql.*" %>
 <%@page import="java.io.OutputStream"%>
 <%@page import="java.io.DataInputStream"%>
 <%@page import="java.lang.Integer"%>
@@ -108,7 +105,6 @@
                     datatype ="\"><strdf:hasGeometry rdf:datatype=\"http://strdf.di.uoa.gr/ontology#WKT\" >";
                     }        
                     
-                    // myhash.get("fileToUpload")
                     Random myr = new Random();
                     String filename = "" + myr.nextInt(Integer.MAX_VALUE);
                     FileOutputStream outo = new FileOutputStream("../docroot/" + filename + ".gml");
@@ -247,8 +243,7 @@
                                 endpoint = new SPARQLEndpoint(serverurl, 8080, "strabon-endpoint-3.2.9/query.jsp");
    
                                 res1 = endpoint.store("../docroot/" + filename + ".rdf", RDFFormat.RDFXML, new URL("file://" + filename));
-                                //     endpoint.store(data, format, namedGraph);
-
+                               
                                 if (res1) {
                                     out.print("<p>The file has been successfully uploaded to " + serverurl + "</p>");
                                 } else {
